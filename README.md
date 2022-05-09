@@ -11,6 +11,7 @@ Contents
 * [Definition of Done](./DEFINITION_OF_DONE.md)
 * [Definition of Ready](./DEFINITION_OF_READY.md)
 * [Dependency Upgrading](./DEPENDENCY_UPGRADING.md)
+* [Development Standards](./DEV_STANDARDS.md)
 * [Healthcheck Specification](./HEALTH_CHECK_SPECIFICATION.md)
 * [Logging Standards](./LOGGING_STANDARDS.md)
 

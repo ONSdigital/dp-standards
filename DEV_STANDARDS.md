@@ -9,7 +9,7 @@ These are the Digital Publishing development standards.
   * App overview and 'Getting started' guide
   * Configuration info
   * Link to [LICENSE](../LICENSE.md) file
-  * Link to [contribution guidelines](../guides/CONTRIBUTING.md)
+  * Link to [contribution guidelines](https://github.com/ONSdigital/dp/blob/main/guides/CONTRIBUTING.md#contributing-to-digital-publishing-repos)
 * Change log
   * Don't list every commit
   * Include high-level features/bug fixes
@@ -29,7 +29,7 @@ These are the Digital Publishing development standards.
   * Include a Swagger spec file which documents any HTTP APIs
 * Pull requests / code review
 * 12-factor
-  * All code must be 12-factor compliant - see [https://12factor.net](https://12factor.net) and [our training module](../training/architecture/12_FACTOR_APP_PRINCIPLES.md)
+  * All code must be 12-factor compliant - see [https://12factor.net](https://12factor.net) and [our training module](https://github.com/ONSdigital/dp/blob/main/training/architecture/12_FACTOR_APP_PRINCIPLES.md#12-factor-app-principles)
 * [Sign commits using GPG](https://github.com/ONSdigital/dp-operations/blob/main/guides/gpg.md)
 * Use meaningful commit messages
 * Design patterns and best practices

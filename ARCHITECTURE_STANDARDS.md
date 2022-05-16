@@ -36,7 +36,7 @@ Innovate Responsibly™
 Single responsibilities - the systems and the teams
 ---------
 * [Loosely coupled microservices](https://microservices.io/microservices/2021/01/04/loosely-coupled-services.html)
-* All apps should be aligned to [12 Factor principles](../training/architecture/12_FACTOR_APP_PRINCIPLES.md)
+* All apps should be aligned to [12 Factor principles](https://github.com/ONSdigital/dp/blob/main/training/architecture/12_FACTOR_APP_PRINCIPLES.md#12-factor-app-principles)
 * An app must have sole ownership of its data
 * There must be a single source of truth for any data
 

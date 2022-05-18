@@ -8,7 +8,7 @@ These are the Digital Publishing development standards.
 * README
   * App overview and 'Getting started' guide
   * Configuration info
-  * Link to [LICENSE](../LICENSE.md) file
+  * Link to [LICENSE](LICENSE.md) file
   * Link to [contribution guidelines](https://github.com/ONSdigital/dp/blob/main/guides/CONTRIBUTING.md#contributing-to-digital-publishing-repos)
 * Change log
   * Don't list every commit
@@ -82,4 +82,4 @@ See also [Logging standards](LOGGING_STANDARDS.md).
   * `fix/fix-name` branches
   * `hotfix/hotfix-name` branches
   * Use GPG signed annotated release tags
-* [Pull request templates](../.github/PULL_REQUEST_TEMPLATE.md)
+* [Pull request templates](.github/PULL_REQUEST_TEMPLATE.md)

@@ -16,7 +16,7 @@ More details of precise behaviour we expect including guidance on field names, t
 
 ## Our API Landscape
 
-Our [API training](../training/architecture/API.md) lays this out in more detail, but in order to allow each microservice API to focus on managing its data well some behaviour has been abstracted from the API services. This behaviour instead sits at the [API router](https://github.com/ONSdigital/dp-api-router).
+Our [API training](https://github.com/ONSdigital/dp/blob/main/training/architecture/API.md#api-architecture) lays this out in more detail, but in order to allow each microservice API to focus on managing its data well some behaviour has been abstracted from the API services. This behaviour instead sits at the [API router](https://github.com/ONSdigital/dp-api-router).
 
 Every request coming in on our api.ons.gov.uk domain must pass through our API router, which will perform a number of common checks and then determine which microservice to route traffic through to. When this API router is running internally, these checks include checking for relevant authentication headers and ensuring the request is audited for security reasons.
 
@@ -24,7 +24,7 @@ All API requests must travel through the API router, including app-to-app traffi
 
 We use feature flags to limit what behaviour is available on our public facing API microservices. Typically, only GET endpoints are exposed on public APIs, though user transaction services such as filter and flex data journeys are an exception to this.
 
-To add a new API microservice [follow our guide](../guides/NEW_API.md) to ensure the API router is updated correctly.
+To add a new API microservice [follow our guide](https://github.com/ONSdigital/dp/blob/main/guides/NEW_API.md#creating-a-new-api-microservice) to ensure the API router is updated correctly.
 
 ## API Structure and Syntax
 

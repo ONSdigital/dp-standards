@@ -6,17 +6,17 @@ A standard could be a way of working across the development team or applying the
 
 The idea of a standard is to be implemented across all software development teams to assist the development of software, to maintain consistency, robustness and security to how and what we develop. 
 
-If it doesn't make sense for an idea to be applied across teams it is **not** a standard.
+If it doesn't make sense for an idea to be applied across teams it is **not** a standard, it may instead be a guide or documentation specific to the repository you're working in.
 
 ### Can standards change?
 
-Yes they can, even though it is expected tha this shouldn't happen frequently as we should have previously thought through any new standards; however we are liable to not knowing what we do not know and therefore we should be allowed to change any standards when new knowledge is gained.
+Yes they can, even though it is expected that this shouldn't happen frequently as we should have previously thought through any new standards; however we are liable to not knowing what we do not know and therefore we should be allowed to change any standards when new knowledge is gained.
 
 ## How to contribute?
 
 Contributing to digital publishing development standards may begin with an idea to resolve a problem discussed in one of the guilds, investigative work into how best to solutionalise a problem within your team, e.g. API versioning, changes to ci/cd workflows. Remember a solution to a problem doesn't necessarily mean it should be a standard, so how do we hit the right balance and to prevent too much bureaucracy?
 
-Consider how we would rollout the standard across teams. A good way to approach this is how to allow developers to fall naturally into following this standard without becoming an expert; this is known as ["falling into the pit of success"](https://blog.codinghorror.com/falling-into-the-pit-of-success/) and if it is done well, the standard becomes the default approach without consulting documentation.
+Consider how we would rollout the standard across teams. A good way to approach this, is to think about how to allow developers to fall naturally into following this standard without becoming an expert; this is known as ["falling into the pit of success"](https://blog.codinghorror.com/falling-into-the-pit-of-success/) and if it is done well, the standard becomes the default approach without consulting documentation.
 
 Examples of this could be writing boiler plate code in libraries for reuse in application code or updating tooling to assist the creation of new repositories or using story templates to enable users as a starting point to fill in acceptance criteria for work etc.
 

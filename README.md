@@ -1,10 +1,11 @@
-Standards
-=========
+# Standards
 
 Welcome to digital publishing development standards repository
 
-Contents
---------
+To contribute to digital publishing software development standards whether that
+is to create new standards or change existing ones, please follow the [contributing to software development standards documentation](./CONTRIBUTING.md).
+
+## Contents
 
 * [API Standards](./API_STANDARDS.md)
 * [Architecture Standards](./ARCHITECTURE_STANDARDS.md)
@@ -15,8 +16,7 @@ Contents
 * [Healthcheck Specification](./HEALTH_CHECK_SPECIFICATION.md)
 * [Logging Standards](./LOGGING_STANDARDS.md)
 
-Licence
--------
+## Licence
 
 Copyright ©‎ 2022, Office for National Statistics (https://www.ons.gov.uk)
 

@@ -13,7 +13,7 @@ Both of these applications proxy requests to various frontend web apps or REST A
 
 ##### So what health checkers should we be registering in these two applications, which are crucial in our services running seamlessly?
 
-The only checkers that should be registered are those that effect the routers ability to proxy requests. 
+The only checkers that should be registered are those that affect the routers ability to proxy requests. 
 
 Example, auditting of every http requests takes place in the API router on publishing subnet: 
 

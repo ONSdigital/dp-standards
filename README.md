@@ -14,6 +14,7 @@ is to create new standards or change existing ones, please follow the [contribut
 * [Dependency Upgrading](./DEPENDENCY_UPGRADING.md)
 * [Development Standards](./DEV_STANDARDS.md)
 * [Healthcheck Specification](./HEALTH_CHECK_SPECIFICATION.md)
+* [Registering Health Checkers](./REGISTERING_HEALTH_CHECKERS.md)
 * [Logging Standards](./LOGGING_STANDARDS.md)
 
 ## Licence

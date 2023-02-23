@@ -5,7 +5,10 @@ An extension of the [API Standards](../API_STANDARDS.md), with implementation de
 ### Syntax & types
 
   * Field names snake case, e.g. `total_count`
-  * Use appropriate types for fields, e.g. numbers should be ints not strings
+  * Use appropriate types for fields, e.g. numbers should be numeric types for the language in use and not strings unless necessary
+    * A field which always returns whole  numbers is an int or similar
+    * A field which always returns numbers and may contain decimal places (15.7) is a float or similar
+    * A field which may contain "10500", "10.51" or "X" (such as statistical observations) may be a string
   * Timestamps should be UTC (optionally, with a timezone)
   * Root endpoint IDs should always be referred to as `id`, rather than name-spaced. All IDs under this level will need descriptive placeholder names. e.g. /datasets/<id>/editions/<edition> where /datasets is the root endpoint
 

@@ -73,6 +73,28 @@ See also [Logging standards](LOGGING_STANDARDS.md).
 * Generally live in a separate dedicated repository
 * Defined by application use cases
 
+### Breaking change policy
+
+[Our versioning policy](https://github.com/ONSdigital/dp/blob/main/guides/VERSIONING.md) follows Semantic Versioning - this means any application or library that introduces a **breaking change** should bump it's major version, i.e. `x.0.0`.
+
+Our process for dealing with this differs between applications and libraries.
+
+#### Applications
+
+For applications, all deployed applications should be backwards compatible when they are deployed.
+
+#### Libraries
+
+For libraries, a 'current version' branch of the library will be maintained until all dependent applications are upgraded. When a new major version is created, this should be communicated to all engineers by broadcasting on the `#development_general` channel in Slack.
+
+The release notes in Github should be clear as to:
+
+* why the breaking change has been made
+* how dependent applications / libraries can know if they need to make changes
+* what changes a dependent application / library will need to make
+
+Depending on the change, it may be appropriate to identify the upstream applications and libraries that use it in order to ensure upgrades are made within an appropriate timeframe.
+
 ## Other requirements
 
 * [Setup CI integration](https://github.com/ONSdigital/dp-ci)

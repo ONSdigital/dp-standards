@@ -13,6 +13,14 @@ We use feature flags to limit what behaviour is available on our public facing A
 To add a new API microservice [follow our guide](https://github.com/ONSdigital/dp/blob/main/guides/NEW_API.md#creating-a-new-api-microservice) to ensure the API router is updated correctly.
 
 ---
+## Application Profile for Linked Data
+
+Our data experts in Dissemination have drafted an [Application Profile](https://github.com/GSS-Cogs/application-profile/tree/canwaf/json-ld) to demonstrate how several data standards can be brought together and successfully implemented. This includes specifying which ontologies and vocabularies are appropriate to use and what fields are important for resource types `datasets`, `editions` and `versions`. 
+
+These vocabularies use field names such as `dcterms:title` rather than `title`, which are important standardised definitions but can make API responses a bit confusing. This is why the JSON-LD standard allows for the use of a `@context` field whose value is a URL to a file containing these definitions e.g. `@context: "https://cdn.ons.gov.uk/assets/json-ld/context.json"` where mappings explain that the JSON response field `title` can be known in JSON-LD by the `dcterms:title` term. Linked data tools will be able to automatically interpret this information and thus provide the interoperability we're seeking to achieve.
+
+__It is our standard at ONS that open data vocabulary terms and '@' fields are only found in the context.json file, though API responses may contain `@context`, `@id`, and `@type` per resource.__
+
 ## Elasticsearch example of performance issues using large offsets
 
 An API accepting large offset values to paginate data returned from elasticsearch will result in slow responses. This is due to data being spread across multiple shards in an Elasticsearch cluster.

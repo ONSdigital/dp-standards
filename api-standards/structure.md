@@ -10,15 +10,15 @@ An extension of the [API Standards](../API_STANDARDS.md), with implementation de
     * A field which always returns numbers and may contain decimal places (15.7) is a float or similar
     * A field which may contain "10500", "10.51" or "X" (such as statistical observations) may be a string
   * Timestamps should be UTC (optionally, with a timezone)
-  * Root endpoint IDs should always be referred to as `id`, rather than name-spaced. All IDs under this level will need descriptive placeholder names. e.g. /datasets/<id>/editions/<edition> where /datasets is the root endpoint
+  * Root endpoint IDs should be referred to as `identifier`, rather than name-spaced. All IDs under this level will need descriptive placeholder names. e.g. /datasets/<identifier>/editions/<edition> where /datasets is the root endpoint
 
 ### Methods & Behaviours
  * Use the `GET` method for search endpoints
  * `POST` endpoints should typically generate IDs, and these should use GUIDs not auto-incrementing counts
 
- ### Links
-* All endpoints must return a `links.self` subdoc in their response,
-* Resources should avoid a nested list by having a links to list endpoints
+ ### _links
+* All endpoints must return a `_links.self` subdoc in their response,
+* Resources should avoid a nested list by having a links to list endpoints or using `_embedded`
 * Responses must contain fully qualified URLs, though this may be managed by the API router
 * `Links` object contains descriptively named objects which each contain
   an `id` (optional) and `url` field e.g.
@@ -26,14 +26,10 @@ An extension of the [API Standards](../API_STANDARDS.md), with implementation de
   {  
       "id":"1234",
       "data":"i have stuff",
-      "links": {  
+      "_links": {  
           "latest_resource": {  
               "id":"5678",
               "url":"/thisapi/1234/subresources/5678"
-          },
-          "external": {  
-              "id":"3456",
-              "url":"/extresources/3456"
           },
           "subresources":{
               "url":"/thisapi/1234/subresources"
@@ -45,20 +41,60 @@ An extension of the [API Standards](../API_STANDARDS.md), with implementation de
       }
   }
   ```
-* Resources may link to their direct parent, a child list, or any relevant
-  external resources. Resources which are many layers deep in an API do not need
-  to contain links to all higher elements e.g. the resource at
-  `/datasets/1234/editions/2345/versions/1` would contain a link to
-  `/datasets/1234/editions/2345` but not to `/datasets/1234`
+* Resources may link to their direct parent, a child list, or any critical related resources. 
+Resources which are many layers deep in an API do not need to contain links to all higher 
+elements but may if that is deemed useful for navigation
+* URLs which do not facilitate navigation (such as a link to the `license` document) should not be
+in the `_links` subdoc but should instead be top level fields with appropraitely descriptive names
+
+### _embedded
+The HAL specification allows for an `_embedded` subdocument to be introduced which contains relevant fields of related resources to minimise on additional requests. 
+
+For our implementation, the intention is this should include as few fields as possible to allow a user to disambiguate between resources of a certain type and navigate to them. e.g. for an embedded list of versions may look like:
+```
+{
+    _embedded: {
+        "versions": [
+            {
+                "@id": api.ons.gov.uk/versions/3
+                "published_date": 02/01/2023
+                "version_note": "a correction to the Jan 1st publication"
+            },
+            {
+                "@id": api.ons.gov.uk/versions/2
+                "published_date": 01/01/2023
+                "version_note": "2023 data publication"
+            },
+            {
+                "@id": api.ons.gov.uk/versions/1
+                "published_date": 01/01/2022
+                "version_note": "2022 data publication"
+            }
+        ]
+    }
+}
+```
+Embedded documents are likely to be lists of resources, and each item in that list must always contain an `@id` field where such field would be present on the complete resource. Although the HAL spec allows for it, we prefer not to include any `_links` field within an `_embedded` resource.
+
+The `_embedded` field should not be included in list responses. E.g. if the model for /datasets/<identifier> includes an `_embedded` field, then it should be omitted from responses at /datasets.
 
 
 ### Returning errors
   * **Errors** should return a status code and a JSON payload with the error message
       * `errors` array containing error messages
 
+## List responses
 
-### Returning lists or search results
+List endpoints must always use a plural name e.g. `/datasets` rather than `/dataset`
+
+It is not necessary for a list response to contain all possible fields for a resource. The `items` contained in `/datasets` do not need to exactly match the number of fields returned on requesting specific resources at `/datasets/<identifier>` but any field present should be named and typed consistently across both responses.
+
+Items in a list response should not contain `_embedded` fields and need only contain the `_links` that are deemed appropriate for navigation and disambiguation within the list.
+
+### List controls, pagination and search results
 Search/list endpoints should contain the following fields: `count`, `limit`, `offset`, `total_count`, `items`
+
+Within the `_links` subdoc for a list response, there should only be `self`, `next`, and `prev` based on the specified page size from the `limit` query param.
 
 The fields work as:
 

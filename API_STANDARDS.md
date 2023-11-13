@@ -6,7 +6,7 @@ API standards
 ### Formats
 We use HTTP APIs to represent our data in machine-readable, predictable ways.
 
-User research shows that our API users are still most comfortable with RESTful APIs, so they are our recommended primary offering, but other API formats such as SPARQL and GraphQL are acceptable additional options or for internal only APIs where relevant.
+User research shows that our API users are still most comfortable with RESTful APIs, so we require that RESTful APIs are built for any new data access, but other API formats such as SPARQL and GraphQL are acceptable additional options or for internal only APIs where relevant. This approach is consistent with the [Gov.uk: API Technical and Data Standards](https://www.gov.uk/guidance/gds-api-technical-and-data-standards) recommendation.
 
 ### RESTful
 Our primary public APIs follow [RESTful principles](https://restfulapi.net/) which are worth understanding more fully but highlights we're particularly focussed on are:

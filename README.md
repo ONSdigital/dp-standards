@@ -1,16 +1,13 @@
-# Standards
+# Dissemination Engineering Standards
 
-Welcome to digital publishing development standards repository
+Welcome to the Dissemination Engineering Standards repository. This set of standards applies to all software developed in Dissemination that is targeted for live operational use.
 
-To contribute to digital publishing software development standards whether that
-is to create new standards or change existing ones, please follow the [contributing to software development standards documentation](./CONTRIBUTING.md).
+To contribute to the standards, whether that is to create new standards or change existing ones, please follow the [contributing documentation](./CONTRIBUTING.md).
 
 ## Contents
 
 * [API Standards](./API_STANDARDS.md)
-* [Architecture Standards](./ARCHITECTURE_STANDARDS.md)
-* [Definition of Done](./DEFINITION_OF_DONE.md)
-* [Definition of Ready](./DEFINITION_OF_READY.md)
+* [Architecture Principles](./ARCHITECTURE_STANDARDS.md)
 * [Dependency Upgrading](./DEPENDENCY_UPGRADING.md)
 * [Development Standards](./DEV_STANDARDS.md)
 * [Healthcheck Specification](./HEALTH_CHECK_SPECIFICATION.md)

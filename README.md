@@ -1,6 +1,6 @@
 # Dissemination Engineering Standards
 
-Welcome to the Dissemination Engineering Standards repository. This set of standards applies to all software developed in Dissemination that is targetted for live operational use.
+Welcome to the Dissemination Engineering Standards repository. This set of standards applies to all software developed in Dissemination that is targeted for live operational use.
 
 To contribute to the standards, whether that is to create new standards or change existing ones, please follow the [contributing documentation](./CONTRIBUTING.md).
 

@@ -35,7 +35,7 @@ Always consider the performance impact of logging:
 Sensitive information
 ---------------------
 
-**NEVER** log passwords, credentials, auth headers, or other sensitive information in any form.
+**NEVER** log passwords, credentials, auth headers, IP addresses, or other sensitive information in any form.
 
 Logging specification
 ---------------------

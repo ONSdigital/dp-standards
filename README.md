@@ -13,6 +13,7 @@ To contribute to the standards, whether that is to create new standards or chang
 * [Healthcheck Specification](./HEALTH_CHECK_SPECIFICATION.md)
 * [Registering Health Checkers](./REGISTERING_HEALTH_CHECKERS.md)
 * [Logging Standards](./LOGGING_STANDARDS.md)
+* [Repository Standards](./REPOSITORY_STANDARDS.md)
 
 ## Licence
 

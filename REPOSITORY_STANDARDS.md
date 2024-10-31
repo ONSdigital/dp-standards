@@ -24,6 +24,10 @@ Repositories should be marked as `private` if they reveal details of:
 - ONS infrastructure
 - ONS security mitigations
 
+### GitHub Copilot
+
+If a repo is `private` then GitHub Copilot and similar tools should be excluded from reading the content in the repository.
+
 ## Repository documentation
 
 ### CODEOWNERS

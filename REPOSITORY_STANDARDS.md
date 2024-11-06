@@ -1,19 +1,35 @@
 # Repository standards
 
-Here is a list of repository standards we have for our repositories. Much of the below is automated by our `dp-cli` tool for creating repositories but is documented here for completeness.
+Here is a list of repository standards we have for our repositories. Much of the below is automated by our [dp-cli](https://github.com/ONSdigital/dp-cli) tool for creating repositories but is documented here for completeness.
 
 ## Contents
 
-- [naming conventions](#naming-conventions)
-- [visibility](#visibility)
-- [repository documentation](#repository-documentation)
-- [permissions](#permissions)
+- [Naming conventions](#naming-conventions)
+- [Visibility](#visibility)
+- [Repository documentation](#repository-documentation)
+- [Permissions](#permissions)
 
 ## Naming conventions
 
 Repositories should be named with the prefix `dis-` to distinguish them as belonging to `Dissemination`. This helps to identify our repositories amongst the many that are part of ONSDigital.
 
 Historical repositories have the prefix `dp-` as they belonged to `Digital Publishing`.
+
+### Branch naming
+
+#### Protected branches
+
+`main`: This is the 'live' branch and is the single source of truth showing the release history for the repo.
+`develop`: This branch is present on repos that have opted to adopt a GitFlow branching strategy and is the integration branch where fixes and features are integrated prior to a release branch being cut
+
+`master` has been historically used in older repositories and should be migrated to `main` when feasible.
+
+#### Development branches
+
+`feature/*` - for features
+`fix/*` - for fixes
+`hotfix/*` - for hotfixes from `main`
+`release/*` - for cutting releases
 
 ## Visibility
 
@@ -22,7 +38,7 @@ We aim to work in the open where possible and so the majority of our repositorie
 Repositories should be marked as `private` if they reveal details of:
 
 - ONS infrastructure
-- ONS security mitigations
+- encrypted secrets files
 
 ### GitHub Copilot
 
@@ -52,10 +68,35 @@ Every repository should have a PULL_REQUEST_TEMPLATE file in it's `.github` fold
 
 ### README
 
-Every repository should have a README file in the root directory. This should include:
+Every repository should have a README file in the root directory.
+
+For applications, this should include:
 
 - how to run the service locally, if applicable
 - details of environmental configuration
+- dependencies required to run in order to develop locally
+- where appropriate, a link to the docker-compose stack to run it with other services
+
+### Makefile
+
+Every repository should use a Makefile for running:
+
+- tests
+- builds
+- linters
+- running application
+
+Where possible, these should be consistent across applications / libraries. Some common targets include:
+
+- build
+- debug
+- lint
+- test
+- test-component
+
+### Dockerfile
+
+All applications should have local dockerfile for running in a local docker environment. The naming convention for this is `Dockerfile.local`.
 
 ## Permissions
 
@@ -70,11 +111,10 @@ Our standard approach is as follows:
 | Dissemination            | write      |
 | Dissemination Tech Leads | admin      |
 | Responsible teams        | maintain   |
-| Security                 | read       |
 
 Responsible teams will be those teams responsible for the repository code. This may be more than one team in the case of shared responsibility.
 
-Users should be given direct collaborator access to repositories and this should be removed on repository creation.
+Users must not be given direct collaborator access to repositories and this should be removed on repository creation.
 
 ### Branch permissions
 

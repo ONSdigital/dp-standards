@@ -88,11 +88,11 @@ Every repository should use a Makefile for running:
 
 Where possible, these should be consistent across applications / libraries. Some common targets include:
 
-- build
-- debug
-- lint
-- test
-- test-component
+- build: used to build the project ready for deployment
+- debug: used to build and run the project locally often watching for local changes and rebuilding to aid in local development
+- lint: runs all linters and other static code analysis tools for the project
+- test: runs unit and integration tests for the project
+- test-component: runs component tests for the project
 
 ### Dockerfile
 

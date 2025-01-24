@@ -23,6 +23,12 @@ The following categories of live operational code bases are exempt from this lin
 
 All other existing, live operational code bases should be updated to meet this standard at or prior to the point of next code change.
 
+## Inclusion in workflow
+
+In order to ensure linters (and other static code analysis tools) are not forgotten, these tools must be run automatically as part of the standard workflow for all teams. This must occur before a pull request can be approved and block the merging of the pull request until resolved. There are a number of options for achieving this including the Concourse CI PR jobs or using GitHub Actions.
+
+Some teams may also wish to use [pre-commit](https://github.com/pre-commit/pre-commit) hooks to allow for linters to run before code is committed to provide earlier feedback. As pre-commit hooks are dependent on `pre-commit` being installed, this approach should only be used in combination with a guaranteed, remote executed method.
+
 ## Base linters and formatters
 
 The following sections outline the minimum, base requirement for linters and formatters that should be used. Linters and formatters are specified for each of the common languages and frameworks used and signpost default configurations where applicable.

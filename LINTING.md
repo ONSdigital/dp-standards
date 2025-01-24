@@ -1,6 +1,6 @@
 # Linting Standard
 
-This standard outlines the minimum [linting](https://en.wikipedia.org/wiki/Lint_(software)) and code style/format checking expectations for Dissemination repos. This
+This standard outlines the minimum [linting](https://en.wikipedia.org/wiki/Lint_(software)) and code style/format checking expectations for Dissemination repos.
 
 ## Context
 
@@ -35,7 +35,7 @@ These tools are a minimum standard and teams may choose to add additional tools 
 
 Megalinter is a docker based linting toolbox that combines many different language specific linters and provides a common summary output.
 
-The normal language specific linters should still be used
+The normal language specific linters should still be used.
 
 ### Go
 
@@ -44,7 +44,7 @@ The normal language specific linters should still be used
 ### Python
 
 * [ruff](https://github.com/astral-sh/ruff)
-* [black](https://github.com/psf/black)
+* [pylint](https://github.com/pylint-dev/pylint) is currently recommended until such time as ruff supports all pylint rules
 
 Recommended configuration can be found in the [python template repo](https://github.com/ONSdigital/ons-python-template).
 
@@ -67,6 +67,7 @@ Recommended configuration can be found in the [python template repo](https://git
 * [terraform validate](https://developer.hashicorp.com/terraform/cli/commands/validate)
 * [terraform fmt](https://developer.hashicorp.com/terraform/cli/commands/fmt) (use the `-check` flag on PR to check that the files are formatted)
 * [checkov](https://www.checkov.io/)
+* [trivy](https://github.com/aquasecurity/trivy)
 
 Recommended configuration can be found in the [terraform template repo](https://github.com/ONSdigital/dis-aws-terraform-stack-template).
 
@@ -85,6 +86,14 @@ Recommended configuration can be found in the [terraform template repo](https://
 ### Java
 
 As all of our Java codebases are legacy with a limited lifespan, we have decided not to introduce linters to these repos. If at any point in the future new Java codebases are developed, then this standard should be updated with the agreed linting recommendations.
+
+### Secrets detection
+
+The following tools prevent secrets being committed to the repo.
+
+* [GitHub secret scanning](https://docs.github.com/en/code-security/secret-scanning/enabling-secret-scanning-features) - it is required that all public repos have both secret scanning and push protection enabled
+
+Optionally, you may wish to also use [gitleaks](https://github.com/gitleaks/gitleaks).
 
 ### Other languages and frameworks
 

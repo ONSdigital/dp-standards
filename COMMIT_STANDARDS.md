@@ -29,3 +29,20 @@ When working on a feature branch, it's common for your branch to become outdated
 
 - Coordinate with Reviewers/Team: Rebasing during an active code review can complicate the review process. Always check with your reviewer/team style guide before rebasing or tidying up commit histories.
 - Use Squashing Judiciously: Squash commits when it makes sense to consolidate minor, related changes into one atomic commit. Just ensure that you retain enough detail in the commit message to explain the consolidated changes.
+
+An example rebasing flow might look like this:
+
+```sh
+    git switch feature/my-feature
+    git fetch
+    git rebase origin/develop
+    # resolve possible conflicts here
+    git push origin --force-with-lease # force with lease is preferred for safety
+```
+
+An example squash merge flow might look like this:
+
+```sh
+    git switch develop
+    git merge --squash feature/my-feature 
+```

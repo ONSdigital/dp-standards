@@ -39,10 +39,3 @@ An example rebasing flow might look like this:
     # resolve possible conflicts here
     git push origin --force-with-lease # force with lease is preferred for safety
 ```
-
-An example squash merge flow might look like this:
-
-```sh
-    git switch develop
-    git merge --squash feature/my-feature 
-```

@@ -8,11 +8,14 @@ To contribute to the standards, whether that is to create new standards or chang
 
 * [API Standards](./API_STANDARDS.md)
 * [Architecture Principles](./ARCHITECTURE_STANDARDS.md)
+* [Commit standards](./COMMIT_STANDARDS.md)
 * [Dependency Upgrading](./DEPENDENCY_UPGRADING.md)
 * [Development Standards](./DEV_STANDARDS.md)
 * [Healthcheck Specification](./HEALTH_CHECK_SPECIFICATION.md)
-* [Registering Health Checkers](./REGISTERING_HEALTH_CHECKERS.md)
+* [Licensing Standard](./LICENSING_STANDARD.md)
+* [Linting Standard](./LICENSE.md)
 * [Logging Standards](./LOGGING_STANDARDS.md)
+* [Registering Health Checkers](./REGISTERING_HEALTH_CHECKERS.md)
 * [Repository Standards](./REPOSITORY_STANDARDS.md)
 
 ## Licence

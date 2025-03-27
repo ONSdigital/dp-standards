@@ -20,8 +20,8 @@ legacy florence).
 ## Go based apps and libraries
 
 Go based repositories have their dependencies defined in three different ways.
-1. The version of go used to test and build the component (the docker image tag defined in `ci/build.yml` etc. eg. `1.15.8`)
-2. The language specification of the module (defined in `go.mod` eg. `1.15`)
+1. The version of go used to test and build the component (the docker image tag defined in `ci/build.yml` etc. eg. `1.24.1`)
+2. The minimum go version required to build the module (defined in `go.mod` eg. `1.24.0`)
 3. The versions of each of the module dependencies (defined in `go.mod` and `go.sum`)
 
 ### Build and test version (docker image)
@@ -31,10 +31,10 @@ defined [on the `golang` image on docker hub](https://hub.docker.com/_/golang) a
 For example…
 
 | Available docker image tags | Choose… |
-| --------------------------- | ------- |
-| 1.15.8 , 1.16.0             | 1.15.8  |
-| 1.15.9 , 1.16.1             | 1.16.1  |
-| 1.15.9 , 1.16.2             | 1.16.2  |
+|-----------------------------|---------|
+| 1.23.8 , 1.24.0             | 1.23.8  |
+| 1.23.9 , 1.24.1             | 1.24.1  |
+| 1.23.9 , 1.24.2             | 1.24.2  |
 
 Once the new version of go has been selected it needs to be added to the `ci/build.yml` and `ci/unit.yml` files.
 
@@ -42,12 +42,30 @@ NB. For libraries the version of go will be pinned by the app using the library 
 latest version of go instead. So for libraries only, the tag in the above files should be `latest` instead of a specific
 version. 
 
-### Language specification (go.mod)
+Remember, newly released versions of docker images may not be in the private ECR repository yet and [will need to be
+added first](https://github.com/ONSdigital/dp-operations/blob/main/guides/aws-ecr/building-and-pushing-images-for-CI.md)
+before CI will be able to use them.
 
-If the docker tag is upgraded from one minor version to another (eg. from `1.15.x` to `1.16.x`) then the language
-specification of the module in `go.mod` should be upgraded as well. Whilst not strictly necessary it helps to keep
-things in sync. Note that this must not contain the patch version so should simply be `1.16` etc. not `1.16.2` and can
-be updated with the command `go mod edit -go=1.16` or similar.
+### Minimum go version required (go.mod)
+
+Since version 1.21, go has supported toolchain configuration in the go module. This replaces the previous concept of a
+language specification via the `go` directive in `go.mod`.  There is also a `toolchain` directive which allows for finer
+grained configuration of versions, but we don't require this ability. 
+
+[A full description of the toolchain configuration can be found in the go documentation](https://go.dev/doc/toolchain) 
+but for simplicity, the `go` directive now states the minimum version of go required. This is useful for libraries so 
+that if a package uses functionality that is only available in say 1.24 it will prevent the library from being used in 
+an app that is still on 1.23.
+
+For applications, it is important that the minimum version defined here does not exceed the version defined in the 
+`ci/build.yml` etc. otherwise, on each build the later version will be downloaded automatically.
+
+In short, when upgrading, ensure your `go` line in `go.mod` is equal or lower than the version of the docker image used
+to build the app. Remove any `toolchain` lines (which might be added automatically by `go mod tidy`) as we do not use
+this functionality and it may cause problems with our builds.
+
+Note. Although old style language specifications like `go 1.24` are still valid, it is more correct to specify an exact
+version e.g. `go 1.24.0`.
 
 ### Module dependencies
 

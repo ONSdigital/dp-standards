@@ -35,7 +35,9 @@ Always consider the performance impact of logging:
 Sensitive information
 ---------------------
 
-**NEVER** log passwords, credentials, auth headers, IP addresses, or other sensitive information in any form.
+**NEVER** log passwords, credentials, auth headers, or other sensitive information in any form.
+
+In some situations it may be necessary to log a user's IP address, such as during authentication, for the purposes of auditing. This should only be done in specific situations and only when necessary.
 
 Logging specification
 ---------------------
@@ -205,15 +207,15 @@ The `data` fields are a means of adding event specific details that help in unde
 
 Following creation of the v2 library in [log.go](https://github.com/ONSdigital/log.go), `severity` is now a mandatory field when creating log events. In addition to this, it is not possible to pass `severity` as an optional field, therefore removing the possibility of duplicate `severity` logs.
 
-Four additional functions have been added to the log library: `Info`, `Warn`, `Error` and `Fatal`. These functions wrap the existing `Event` function and have been named to correspond with their severity level (shown [here](#severity-levels)). So, for example, the `Warn` function corresponds with the WARN severity. These functions can be used to provide information about a specific severity level rather than using the more generic `Event` function. 
+Four additional functions have been added to the log library: `Info`, `Warn`, `Error` and `Fatal`. These functions wrap the existing `Event` function and have been named to correspond with their severity level (shown [here](#severity-levels)). So, for example, the `Warn` function corresponds with the WARN severity. These functions can be used to provide information about a specific severity level rather than using the more generic `Event` function.
 
 As we already had a public `Error` function that is used in our apps to display error messages as an option in the logs, the original `Error` function has now been renamed to `FormatError`, which also ensures that the wrapper function names (`Info`, `Warn`, `Error` & `Fatal`) are consistent with their error level. The functionality of `FormatError` remains unchanged.
 
-The `Error` and `Fatal` functions also require that an error is passed as an argument. An example of this for the `Fatal` function would be: 
+The `Error` and `Fatal` functions also require that an error is passed as an argument. An example of this for the `Fatal` function would be:
 
 ```go
 log.Fatal(ctx, "failed to shutdown http server", errors.New("testfatal"))
-``` 
+```
 
 `FormatError` is called within the `Error` and `Fatal` functions, which ensures that the `StackTrace` information is also shown in the log.
 

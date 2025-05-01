@@ -91,7 +91,9 @@ Recommended configuration can be found in the [terraform template repo](https://
 
 ### Java
 
-As all of our Java codebases are legacy with a limited lifespan, we have decided not to introduce linters to these repos. If at any point in the future new Java codebases are developed, then this standard should be updated with the agreed linting recommendations.
+As all of our Java codebases are legacy with a limited lifespan, we have decided not to introduce linters to these repos if they did not have them already. If at any point in the future new Java codebases are developed, then this standard should be updated with the agreed linting recommendations.
+
+The most common convention within the existing codebases that have it is using [checkstyle](https://github.com/apache/maven-checkstyle-plugin). We recommend using the Sun standard (`sun_checks.xml`) as a default.
 
 ### Secrets detection
 

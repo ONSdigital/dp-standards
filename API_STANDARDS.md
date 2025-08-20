@@ -80,8 +80,14 @@ To add a new API microservice [follow our guide](https://github.com/ONSdigital/d
 
 ### Returning errors
 
+Returning errors from an API is designed to inform the client something has gone wrong. As a general rule, for server errors [logs](LOGGING_STANDARDS.md) are a better place for diagnostics of *what went wrong*. A client is interested in the result (approval failed, dataset creation failed, failed to get search) and not the underlying cause (connection refused, null pointer exception etc).
+
 - **Errors** should return a status code and a JSON payload with the error message
 - `errors` array containing error messages
+- error messages should:
+  - be clear and descriptive
+  - make clear if it is a client or server error, i.e. can the requestor take action to resolve the error
+  - not leak sensitive data or internal application workings
 
 ### Returning lists or search results
 

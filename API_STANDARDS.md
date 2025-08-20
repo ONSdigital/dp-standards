@@ -1,5 +1,4 @@
-API standards
-=============
+# API standards
 
 ## Core Principles
 

@@ -1,8 +1,6 @@
-Logging standards
-=================
+# Logging standards
 
-Libraries
----------
+## Libraries
 
 We have libraries the following libaries which match the logging standards defined below:
 
@@ -10,8 +8,7 @@ We have libraries the following libaries which match the logging standards defin
 * Java - [com.github.onsdigital.logging](https://github.com/ONSdigital/dp-logging)
 * Javascript - [app/utilities/log.js](https://github.com/ONSdigital/florence/blob/develop/src/app/utilities/log.js)
 
-What we should be logging
--------------------------
+## What we should be logging
 
 Apps should log all important events, especially failures, as well as enough events to be able to trace the execution logic through each major step without being overly noisy.  Any information which adds value is worth including in the event. **If you're unsure, log more rather than less.**
 
@@ -32,13 +29,11 @@ Always consider the performance impact of logging:
 * JSON serialisation
 * deeply nested data structures
 
-Sensitive information
----------------------
+### Sensitive information
 
 **NEVER** log passwords, credentials, auth headers, IP addresses, or other sensitive information in any form.
 
-Logging specification
----------------------
+## Logging specification
 
 We have defined the formatting and data structures, including field names and types, we use for logging.
 

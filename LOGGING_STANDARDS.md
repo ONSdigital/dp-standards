@@ -107,7 +107,7 @@ This can be used to log inbound or outbound HTTP event data.
 The `auth` field defines the common auth event data.
 
 | Field name      | Required | Type     | Example               | Description                                  |
-| --------------- | -------- | -------- | --------------------- | -------------------------------------------- |
+|-----------------|----------|----------|-----------------------|----------------------------------------------|
 | `identity`      | Yes      | `string` | `"dp-import-tracker"` | The user id or service id                    |
 | `identity_type` | Yes      | `string` | `"service"`           | The identity type (i.e. `user` or `service`) |
 
@@ -120,7 +120,6 @@ Errors are logged as an array. Each element of the array represents a single err
 | `data`        | No       | `object`[^5]                            |                        | [Arbitrary key-value pairs](#arbitrary-data-fields) |
 | `message`     | Yes      | `string`                                | `"connection refused"` | The error cause                                     |
 | `stack_trace` | No       | [`[]stack_trace`](#stack-trace-element) |                        | [Stack trace as an array](#stack-trace-element)     |
-| `data`        | No       | `object`<sup>1</sup>                    |                        | [Arbitrary key-value pairs](#arbitrary-data-fields) |
 
 [^5]: The error-specific details in `data` are input as an object/map in code, but are stored as a text string by the centralised logging service to allow additional detail to be added to an event without needing to worry about key name collision.  These details can still be searched using a general text search on the `data` field.
 
@@ -129,10 +128,10 @@ Errors are logged as an array. Each element of the array represents a single err
 The stack trace is logged as an array.  Each element of the array has the following fields.
 
 | Field name | Required | Type     | Example                | Description                                            |
-| ---------- | -------- | -------- | ---------------------- | ------------------------------------------------------ |
+|------------|----------|----------|------------------------|--------------------------------------------------------|
+| `line`     | No       | `int16`  | `18`                   | The line in the source file that is throwing the error |
 | `file`     | No       | `string` | `"/some/path/main.go"` | The source file containing the code throwing an error  |
 | `function` | No       | `string` | `"main.main"`          | The function in which the error is occurring           |
-| `line`     | No       | `int16`  | `18`                   | The line in the source file that is throwing the error |
 
 ### Effective `event` types
 
@@ -166,7 +165,7 @@ The event severity levels are used to identify how critical an event is, especia
 There are four severity levels:
 
 | Code | Severity | Description                                                                             |
-| ---- | -------- | --------------------------------------------------------------------------------------- |
+|------|----------|-----------------------------------------------------------------------------------------|
 | 0    | FATAL    | An catastrophic failure event resulting in the death of the application                 |
 | 1    | ERROR    | An unrecoverable failure event that halts the current flow of execution                 |
 | 2    | WARN     | A failure event that can be managed within the current flow of execution (e.g. retried) |

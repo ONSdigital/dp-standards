@@ -16,6 +16,7 @@ A few ideas of useful things to log are:
 
 * application startup (with sanitised application config output under `data`)
 * log all failures
+  * a failure caused by a bad request (client error) that the system deals with (i.e. issues a 4XX response) is not an error and should be logged as INFO only if deemed appropriate.
 * http requests
 * requests to data stores and other third party services (e.g. mongo, postgres, kafka, neptune, etc.)
 * log events at significant steps throughout the execution flow

@@ -218,5 +218,5 @@ log.Fatal(ctx, "failed to shutdown http server", errors.New("testfatal"))
 
 TODO: Add kafka log data to the logging spec
 
-- Events should refer to an ID to tie the events across services together - whether this is the same ID as used in context, or another identifier, which has previously been logged alongside the context
-- log `topic` and (if consuming) `group` and `offset`
+* Events should refer to an ID to tie the events across services together - whether this is the same ID as used in context, or another identifier, which has previously been logged alongside the context
+* log `topic` and (if consuming) `group` and `offset`

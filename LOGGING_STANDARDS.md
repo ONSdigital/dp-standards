@@ -197,24 +197,7 @@ There are two arbitrary `data` fields in the logging spec.  One at the top level
 
 The `data` fields are a means of adding event specific details that help in understanding the event, but are not common enough to justify a field in the spec. These fields are an important part of the event data and it is important that the data be useful and well structured.
 
-### v2
-
-Following creation of the v2 library in [log.go](https://github.com/ONSdigital/log.go), `severity` is now a mandatory field when creating log events. In addition to this, it is not possible to pass `severity` as an optional field, therefore removing the possibility of duplicate `severity` logs.
-
-Four additional functions have been added to the log library: `Info`, `Warn`, `Error` and `Fatal`. These functions wrap the existing `Event` function and have been named to correspond with their severity level (shown [here](#severity-levels)). So, for example, the `Warn` function corresponds with the WARN severity. These functions can be used to provide information about a specific severity level rather than using the more generic `Event` function. 
-
-As we already had a public `Error` function that is used in our apps to display error messages as an option in the logs, the original `Error` function has now been renamed to `FormatError`, which also ensures that the wrapper function names (`Info`, `Warn`, `Error` & `Fatal`) are consistent with their error level. The functionality of `FormatError` remains unchanged.
-
-The `Error` and `Fatal` functions also require that an error is passed as an argument. An example of this for the `Fatal` function would be: 
-
-```go
-log.Fatal(ctx, "failed to shutdown http server", errors.New("testfatal"))
-``` 
-
-`FormatError` is called within the `Error` and `Fatal` functions, which ensures that the `StackTrace` information is also shown in the log.
-
-
-##### Kafka
+### Kafka
 
 TODO: Add kafka log data to the logging spec
 

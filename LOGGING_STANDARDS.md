@@ -60,25 +60,25 @@ Although "human readable" formatting is useful for local development, all apps d
 
 The following are the only top level fields. If you have app specific details you wish to add, it is likely that they should be added under `data` rather than creating a new field.
 
-| Field name   | Required       | Type                           | Example                      | Description                                                             |
-| ------------ | -------------- | ------------------------------ | ---------------------------- | ----------------------------------------------------------------------- |
-| `created_at` | Yes            | `datetime`<sup>1</sup>         | `"2019-01-21T16:19:12.356Z"` | Date and time of the log event (ISO8601 extended date and time string)  |
-| `namespace`  | Yes            | `string`                       | `"dp-frontend-router"`       | Service name or other identifier                                        |
-| `event`      | Yes            | `string`                       | `"connecting to mongodb"`    | [The event being logged](#effective-event-types)                        |
-| `trace_id`   | No<sup>2</sup> | `string`                       |                              | [Trace ID from OpenCensus](https://opencensus.io/tracing/span/traceid/) |
-| `span_id`    | No             | `string`                       |                              | [Span ID from OpenCensus](https://opencensus.io/tracing/span/spanid/)   |
-| `severity`   | [v2](#v2) - Yes            | `int8`                         | `2`                          | [The event severity level code](#severity-levels)                       |
-| `http`       | No             | [`http`](#http-event-data)     |                              | [HTTP event data](#http-event-data)                                     |
-| `auth`       | No             | [`auth`](#auth-event-data)     |                              | [Authentication event data](#auth-event-data)                           |
-| `errors`     | No             | [`[]error`](#error-event-data) |                              | [Error event data](#error-event-data)                                   |
-| `raw`        | No             | `string`                       |                              | [Log message captured from a third party library](#third-party-logs)    |
-| `data`       | No             | `object`<sup>3</sup>           |                              | [Arbitrary key-value pairs](#arbitrary-data-fields)                     |
+| Field name   | Required | Type                           | Example                      | Description                                                             |
+|--------------|----------|--------------------------------|------------------------------|-------------------------------------------------------------------------|
+| `auth`       | No       | [`auth`](#auth-event-data)     |                              | [Authentication event data](#auth-event-data)                           |
+| `created_at` | Yes      | `datetime`[^1]                 | `"2019-01-21T16:19:12.356Z"` | Date and time of the log event (ISO8601 extended date and time string)  |
+| `data`       | No       | `object`[^3]                   |                              | [Arbitrary key-value pairs](#arbitrary-data-fields)                     |
+| `errors`     | No       | [`[]error`](#error-event-data) |                              | [Error event data](#error-event-data)                                   |
+| `event`      | Yes      | `string`                       | `"connecting to mongodb"`    | [The event being logged](#effective-event-types)                        |
+| `http`       | No       | [`http`](#http-event-data)     |                              | [HTTP event data](#http-event-data)                                     |
+| `namespace`  | Yes      | `string`                       | `"dp-frontend-router"`       | Service name or other identifier                                        |
+| `raw`        | No       | `string`                       |                              | [Log message captured from a third party library](#third-party-logs)    |
+| `severity`   | Yes      | `int8`                         | `2`                          | [The event severity level code](#severity-levels)                       |
+| `span_id`    | No       | `string`                       |                              | [Span ID from OpenCensus](https://opencensus.io/tracing/span/spanid/)   |
+| `trace_id`   | No[^2]   | `string`                       |                              | [Trace ID from OpenCensus](https://opencensus.io/tracing/span/traceid/) |
 
-<sup>1</sup> All dates must be UTC and in ISO8601 extended date time format with at least millisecond precision: `yyyy-MM-dd'T'HH:mm:ss.SSSZZ` (e.g. `2019-01-21T16:19:12.356Z`).
+[^1]: All dates must be UTC and in ISO8601 extended date time format with at least millisecond precision: `yyyy-MM-dd'T'HH:mm:ss.SSSZZ` (e.g. `2019-01-21T16:19:12.356Z`).
 
-<sup>2</sup> Not mandatory, but must be included for all events created during the handling of a request.
+[^2]: Not mandatory, but must be included for all events created during the handling of a request.
 
-<sup>3</sup> The event-specific details in `data` are input as an object/map in code, but are stored as a text string by the centralised logging service to allow additional detail to be added to an event without needing to worry about key name collision.  These details can still be searched using a general text search on the `data` field.
+[^3]: The event-specific details in `data` are input as an object/map in code, but are stored as a text string by the centralised logging service to allow additional detail to be added to an event without needing to worry about key name collision.  These details can still be searched using a general text search on the `data` field.
 
 #### HTTP event data
 
@@ -86,21 +86,21 @@ HTTP events are so common that we've defined a specific top-level field to captu
 
 This can be used to log inbound or outbound HTTP event data.
 
-| Field name                | Required | Type                   | Example                      | Description                                                   |
-| ------------------------- | -------- | ---------------------- | ---------------------------- | ------------------------------------------------------------- |
-| `method`                  | Yes      | `string`               | `"GET"`                      | The HTTP method used                                          |
-| `scheme`                  | Yes      | `string`               | `"https"`                    | The scheme or protocol from the URL                           |
-| `host`                    | Yes      | `string`               | `"10.100.20.1"`              | The hostname or ip from the URL                               |
-| `port`                    | Yes      | `int32`                | `443`                        | The port number from the URL                                  |
-| `path`                    | Yes      | `string`               | `"/healthcheck"`             | The request path from the URL                                 |
-| `query`                   | No       | `string`               | `"x=1&y=1"`                  | The unparsed query string from the URL                        |
-| `status_code`             | No       | `int16`                | `200`                        | The HTTP status code                                          |
-| `started_at`              | Yes      | `datetime`<sup>1</sup> | `"2019-01-21T16:19:12.356Z"` | ISO8601 date string of the request start time                 |
-| `ended_at`                | No       | `datetime`<sup>1</sup> | `"2019-01-21T16:19:12.356Z"` | ISO8601 date string of the request end time                   |
-| `duration`                | No       | `int64`                | `236578`                     | Difference between `started_at` and `ended_at` in nanoseconds |
-| `response_content_length` | No       | `int64`                | `34`                         | The length of the response                                    |
+| Field name                | Required | Type           | Example                      | Description                                                   |
+|---------------------------|----------|----------------|------------------------------|---------------------------------------------------------------|
+| `duration`                | No       | `int64`        | `236578`                     | Difference between `started_at` and `ended_at` in nanoseconds |
+| `ended_at`                | No       | `datetime`[^4] | `"2019-01-21T16:19:12.356Z"` | ISO8601 date string of the request end time                   |
+| `host`                    | Yes      | `string`       | `"10.100.20.1"`              | The hostname or ip from the URL                               |
+| `method`                  | Yes      | `string`       | `"GET"`                      | The HTTP method used                                          |
+| `path`                    | Yes      | `string`       | `"/healthcheck"`             | The request path from the URL                                 |
+| `port`                    | Yes      | `int32`        | `443`                        | The port number from the URL                                  |
+| `query`                   | No       | `string`       | `"x=1&y=1"`                  | The unparsed query string from the URL                        |
+| `response_content_length` | No       | `int64`        | `34`                         | The length of the response                                    |
+| `scheme`                  | Yes      | `string`       | `"https"`                    | The scheme or protocol from the URL                           |
+| `started_at`              | Yes      | `datetime`[^4] | `"2019-01-21T16:19:12.356Z"` | ISO8601 date string of the request start time                 |
+| `status_code`             | No       | `int16`        | `200`                        | The HTTP status code                                          |
 
-<sup>1</sup> All dates must be UTC and in ISO8601 extended date time format with at least millisecond precision: `yyyy-MM-dd'T'HH:mm:ss.SSSZZ` (e.g. `2019-01-21T16:19:12.356Z`).
+[^4]: All dates must be UTC and in ISO8601 extended date time format with at least millisecond precision: `yyyy-MM-dd'T'HH:mm:ss.SSSZZ` (e.g. `2019-01-21T16:19:12.356Z`).
 
 #### Auth event data
 
@@ -116,12 +116,13 @@ The `auth` field defines the common auth event data.
 Errors are logged as an array. Each element of the array represents a single error and has the following fields.
 
 | Field name    | Required | Type                                    | Example                | Description                                         |
-| ------------- | -------- | --------------------------------------- | ---------------------- | --------------------------------------------------- |
+|---------------|----------|-----------------------------------------|------------------------|-----------------------------------------------------|
+| `data`        | No       | `object`[^5]                            |                        | [Arbitrary key-value pairs](#arbitrary-data-fields) |
 | `message`     | Yes      | `string`                                | `"connection refused"` | The error cause                                     |
 | `stack_trace` | No       | [`[]stack_trace`](#stack-trace-element) |                        | [Stack trace as an array](#stack-trace-element)     |
 | `data`        | No       | `object`<sup>1</sup>                    |                        | [Arbitrary key-value pairs](#arbitrary-data-fields) |
 
-<sup>1</sup> The error-specific details in `data` are input as an object/map in code, but are stored as a text string by the centralised logging service to allow additional detail to be added to an event without needing to worry about key name collision.  These details can still be searched using a general text search on the `data` field.
+[^5]: The error-specific details in `data` are input as an object/map in code, but are stored as a text string by the centralised logging service to allow additional detail to be added to an event without needing to worry about key name collision.  These details can still be searched using a general text search on the `data` field.
 
 ##### Stack trace element
 

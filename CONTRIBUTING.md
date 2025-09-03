@@ -42,3 +42,19 @@ It is reasonable to challenge the pull request merit to becoming a standard or c
 - Follow normal pull request procedure, leaving comments to improve documentation
 
 Pull requests will need at least one technical lead approval before it can be merged so responsibility does not soley lie with developers.
+
+#### Markdown linting
+
+This respository uses [markdown linting](https://github.com/DavidAnson/markdownlint-cli2) for all PRs.
+
+To install:
+
+```sh
+    brew install markdownlint-cli2
+```
+
+To run:
+
+```sh
+    markdownlint-cli2 **/*.md
+```

@@ -4,7 +4,7 @@
 
 A standard could be a way of working across the development team or applying the same solution to a common problem to software built on the digital publishing platform.
 
-The idea of a standard is to be implemented across all software development teams to assist the development of software, to maintain consistency, robustness and security to how and what we develop. 
+The idea of a standard is to be implemented across all software development teams to assist the development of software, to maintain consistency, robustness and security to how and what we develop.
 
 If it doesn't make sense for an idea to be applied across teams it is **not** a standard, it may instead be a guide or documentation specific to the repository you're working in.
 

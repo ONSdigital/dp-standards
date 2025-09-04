@@ -43,6 +43,31 @@ It is reasonable to challenge the pull request merit to becoming a standard or c
 
 Pull requests will need at least one technical lead approval before it can be merged so responsibility does not soley lie with developers.
 
+#### Pre-commit
+
+We encourage the use of pre-commit locally, this reduces the amount of common mistakes and engineers can just focus on reviewing the actual changes.
+
+```sh
+# Install pre-commit
+brew install pre-commit
+# This will enable pre-commit to run every time you git commit
+pre-commit install
+```
+
+If you want to do an adhoc run of pre-commit
+
+⚠️ This will only run on files that are staged in git
+
+```sh
+pre-commit run --all-files
+```
+
+If you want to commit and skip checks
+
+```sh
+git commit --no-verify -m "some message"
+```
+
 #### Markdown linting
 
 This respository uses [markdown linting](https://github.com/DavidAnson/markdownlint-cli2) for all PRs.

@@ -1,5 +1,4 @@
-Health check specification
-==========================
+# Health check specification
 
 All apps that run in production are required to have a health check.  The health check must comply with this spec and have an HTTP [health endpoint](#health-endpoint) to return the health status, even if they are event-driven.  The main function of the health check is to enable the app to signal to the platform whether or not it is functional by means of the [status code](#health-endpoint-status-codes).  The platform will then use this information to manage routing to the app and the lifecycle of the app.  A secondary purpose of the health check is to assist a human in rapid debugging of issues by utilising the details returned in the body.
 
@@ -8,8 +7,7 @@ A health check is comprised of two components:
 1. [The checks](#checks): Specific tests (can be external or internal) that are triggered on a fixed interval to ascertain the current health status.  A health check may run many checks.
 2. [The health endpoint](#health-endpoint): The endpoint that returns information about the current health status.
 
-Checks
-------
+## Checks
 
 The purpose of a health check is so that a monitoring tool can quickly determine the current fitness of that app to perform its function.  In order to determine the current health status of the app, the health check can need to run many different checks, and indeed many different types of checks.  These checks can be against external dependencies or the internal functioning of the app.
 
@@ -42,8 +40,7 @@ Status     | Description
 `WARNING`  | Things are degraded, but at least partially functioning
 `CRITICAL` | The checked functionality is unavailable or non-functioning
 
-Health endpoint
----------------
+## Health endpoint
 
 The current health status of the app is served via the health endpoint.  This health status comes in two forms.  The status code provides a quick way to get the overall status of the app, while the JSON body provides further information that might be useful in triaging any issues.
 
@@ -83,13 +80,13 @@ Field        | Type     | Description
 -------------|----------|---------------
 `status`     | `string` | The overall status of the health check using the same values as the [check statuses](#check-statuses)
 `version`    | [`Version`](#version) | The version information of the app
-`uptime`     | `ms`     | Milliseconds elapsed since the app started <sup>1</sup>
-`start_time` | `ISO8601`<sup>2</sup> | The time the app started in UTC
+`uptime`     | `ms`     | Milliseconds elapsed since the app started [^1]
+`start_time` | `ISO8601`[^2] | The time the app started in UTC
 `checks`     | [`[]Check`](#check)   | An array of the checks with details of their statuses
 
-<sup>1</sup> The start time of the app is approximate as we use the time at which the health check library was instantiated.
+[^1]: The start time of the app is approximate as we use the time at which the health check library was instantiated.
 
-<sup>2</sup> `ISO8601` UTC date time (`2006-01-02T15:04:05.999Z`)
+[^2]: `ISO8601` UTC date time (`2006-01-02T15:04:05.999Z`)
 
 #### Version
 
@@ -99,11 +96,11 @@ Field              | Type     | Description
 -------------------|----------|---------------
 `version`          | `string` | The [semver version](https://semver.org/) of the app
 `git_commit`       | `string` | The git commit SHA
-`build_time`       | `ISO8601`<sup>1</sup> | The time that the app was built
+`build_time`       | `ISO8601`[^3] | The time that the app was built
 `language`         | `string` | The language the app is written in
 `language_version` | `string` | The version of the language being used
 
-<sup>1</sup> `ISO8601` UTC date time (`2006-01-02T15:04:05.999Z`)
+[^3]: `ISO8601` UTC date time (`2006-01-02T15:04:05.999Z`)
 
 #### Check
 
@@ -115,8 +112,8 @@ Field          | Type     | Required | Description
 `status`       | `string` | Yes      | The [status of the check](#check-statuses)
 `status_code`  | `int`    | No       | The status code returned by the external service (only for use with external http checks)
 `message`      | `string` | Yes      | Brief description of the status (i.e. `OK` or `received status code 500`)
-`last_checked` | `ISO8601`<sup>1</sup> | Yes | The last time the check was run
-`last_success` | `ISO8601`<sup>1</sup> | Yes | The time of the last successful check (return `null` if the check has not passed)
-`last_failure` | `ISO8601`<sup>1</sup> | Yes | The time of the last failed check (return `null` if the check has not failed)
+`last_checked` | `ISO8601`[^4] | Yes | The last time the check was run
+`last_success` | `ISO8601`[^4] | Yes | The time of the last successful check (return `null` if the check has not passed)
+`last_failure` | `ISO8601`[^4] | Yes | The time of the last failed check (return `null` if the check has not failed)
 
-<sup>1</sup> `ISO8601` UTC date time (`2006-01-02T15:04:05.999Z`)
+[^4]: `ISO8601` UTC date time (`2006-01-02T15:04:05.999Z`)

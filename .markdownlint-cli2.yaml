@@ -1,3 +1,5 @@
 ---
 config:
   line-length: false
+ignores:
+  - "LICENSE.md"

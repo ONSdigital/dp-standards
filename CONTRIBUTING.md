@@ -45,7 +45,7 @@ Pull requests will need at least one technical lead approval before it can be me
 
 #### Pre-commit
 
-We encourage the use of pre-commit locally, this reduces the amount of common mistakes and engineers can just focus on reviewing the actual changes.
+We encourage the use of [pre-commit](https://pre-commit.com/) locally, this reduces the amount of common mistakes and engineers can just focus on reviewing the actual changes.
 
 ```sh
 # Install pre-commit

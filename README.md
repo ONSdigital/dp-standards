@@ -17,6 +17,6 @@ To contribute to the standards, whether that is to create new standards or chang
 
 ## Licence
 
-Copyright ©‎ 2022, Office for National Statistics (https://www.ons.gov.uk)
+Copyright ©‎ 2022, Office for National Statistics (<https://www.ons.gov.uk>)
 
 Released under MIT license, see [LICENSE](LICENSE.md) for details.

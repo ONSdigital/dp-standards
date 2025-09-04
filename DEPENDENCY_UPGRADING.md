@@ -1,5 +1,4 @@
-Dependency Upgrading Standard
-=============================
+# Dependency Upgrading Standard
 
 ## General approach
 
@@ -7,7 +6,7 @@ When working on a repository, developers should check that the dependencies of t
 date. The approach to updating the dependencies depends on the type of app and the underlying technology.
 
 There is no formal decision process for upgrading language dependencies. As soon as a newer minor version of a language
-is released (providing it is covered by the policy for that language), then you may upgrade it straight away. For 
+is released (providing it is covered by the policy for that language), then you may upgrade it straight away. For
 example, when go@1.x.1 is released then you should use it in your next pull request.
 
 If you notice any upgrades that are not covered by this policy (including major versions of DBs becoming available)
@@ -20,6 +19,7 @@ legacy florence).
 ## Go based apps and libraries
 
 Go based repositories have their dependencies defined in three different ways.
+
 1. The version of go used to test and build the component (the docker image tag defined in `ci/build.yml` etc. eg. `1.24.1`)
 2. The minimum go version required to build the module (defined in `go.mod` eg. `1.24.0`)
 3. The versions of each of the module dependencies (defined in `go.mod` and `go.sum`)
@@ -27,7 +27,7 @@ Go based repositories have their dependencies defined in three different ways.
 ### Build and test version (docker image)
 
 The general approach for updating the version of go used to build an app is to update to the latest version of go as
-defined [on the `golang` image on docker hub](https://hub.docker.com/_/golang) as long as the patch version is >= 1. 
+defined [on the `golang` image on docker hub](https://hub.docker.com/_/golang) as long as the patch version is >= 1.
 For example…
 
 | Available docker image tags | Choose… |
@@ -38,9 +38,9 @@ For example…
 
 Once the new version of go has been selected it needs to be added to the `ci/build.yml` and `ci/unit.yml` files.
 
-NB. For libraries the version of go will be pinned by the app using the library so for the ci jobs we want to use the 
+NB. For libraries the version of go will be pinned by the app using the library so for the ci jobs we want to use the
 latest version of go instead. So for libraries only, the tag in the above files should be `latest` instead of a specific
-version. 
+version.
 
 Remember, newly released versions of docker images may not be in the private ECR repository yet and [will need to be
 added first](https://github.com/ONSdigital/dp-operations/blob/main/guides/aws-ecr/building-and-pushing-images-for-CI.md)
@@ -50,14 +50,14 @@ before CI will be able to use them.
 
 Since version 1.21, go has supported toolchain configuration in the go module. This replaces the previous concept of a
 language specification via the `go` directive in `go.mod`.  There is also a `toolchain` directive which allows for finer
-grained configuration of versions, but we don't require this ability. 
+grained configuration of versions, but we don't require this ability.
 
-[A full description of the toolchain configuration can be found in the go documentation](https://go.dev/doc/toolchain) 
-but for simplicity, the `go` directive now states the minimum version of go required. This is useful for libraries so 
-that if a package uses functionality that is only available in say 1.24 it will prevent the library from being used in 
+[A full description of the toolchain configuration can be found in the go documentation](https://go.dev/doc/toolchain)
+but for simplicity, the `go` directive now states the minimum version of go required. This is useful for libraries so
+that if a package uses functionality that is only available in say 1.24 it will prevent the library from being used in
 an app that is still on 1.23.
 
-For applications, it is important that the minimum version defined here does not exceed the version defined in the 
+For applications, it is important that the minimum version defined here does not exceed the version defined in the
 `ci/build.yml` etc. otherwise, on each build the later version will be downloaded automatically.
 
 In short, when upgrading, ensure your `go` line in `go.mod` is equal or lower than the version of the docker image used
@@ -67,16 +67,16 @@ this functionality and it may cause problems with our builds.
 Note. Although old style language specifications like `go 1.24` are still valid, it is more correct to specify an exact
 version e.g. `go 1.24.0`.
 
-### Module dependencies
+### Go module dependencies
 
 The module dependencies are audited by running `make audit` and also by an audit CI job triggered by PRs. Any vulnerable
 dependencies identified should be updated. Other dependencies may be updated as necessary eg. in order to use new
 functionality.
 
-To update a specific dependency run `go get -u path.to/some/library` or for a specific version 
+To update a specific dependency run `go get -u path.to/some/library` or for a specific version
 `go get path.to/some/library@v1.2.3`. If you want to update all direct dependencies simply run `go get -u ./...`.
 
-This will not update sub-dependencies of dependencies (unless a new version of a dependency requires a new version of a 
+This will not update sub-dependencies of dependencies (unless a new version of a dependency requires a new version of a
 sub-dependency). So if after updating there are still vulnerabilities in any of these transitive dependencies there are
 two possibilities for resolution.
 
@@ -87,15 +87,15 @@ two possibilities for resolution.
 
 ## Java based apps and libraries
 
-latest LTS and wait for a patch (update installing to go from https://adoptopenjdk.net/)
+latest LTS and wait for a patch (update installing to go from <https://adoptopenjdk.net/>)
 
-### Module dependencies
+### Java dependencies
 
 The Java apps use the build tool Maven, where dependencies are defined in a `pom.xml` file. Normally there is a single pom.xml file at the root of the project, though there may be multiple if there are sub modules (e.g. Zebedee)
 
 Each dependency in the pom.xml file has a block of XML under the `dependencies` section:
 
-```
+```xml
     <dependencies>  
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -109,15 +109,15 @@ To run an audit of the dependencies, run the `make audit` command. This is a wra
 
 Exclusions for the dependency audit are defined in the pom.xml file, under the configuration section of the `ossindex-maven-plugin`. Below is an example exclusion defined for the elasticsearch dependency. The surrounding XML will most likely exist already, and only the `exlude` block will need adding.
 
-```
+```xml
    <build>
         <plugins>
             <plugin>
                 <groupId>org.sonatype.ossindex.maven</groupId>
                 <artifactId>ossindex-maven-plugin</artifactId>
-                
+
                 ....
-                                
+
                 <configuration>
                    <excludeCoordinates>
                        <exclude>
@@ -134,11 +134,11 @@ Exclusions for the dependency audit are defined in the pom.xml file, under the c
 
 If the vulnerable dependency is not listed in the pom.xml file, it will be a transitive dependency, meaning it is a dependency of a dependency. In these cases it is useful to use the `mvn dependency:tree` command. This command is run from the directory of the pom.xml file, and will print a tree like representation of dependencies. The output can be searched for the vulnerable dependency, and then the parent of that dependency can be seen. In these cases consider whether updating the parent dependency would be more appropriate. Sometimes updating the parent dependency still does not use a fixed version of the vulnerable dependency. If the vulnerable dependency needs a specific version, create a new dependency entry in the pom.xml which will override the existing version used. It is recommended to only upgrade the minor version if possible, as a major version may include breaking changes.
 
-To see the available versions of a dependency, go to https://mvnrepository.com/ and search the dependency name. When a version is selected, an XML snippet for the dependency will be given under the Maven tab.
+To see the available versions of a dependency, go to <https://mvnrepository.com/> and search the dependency name. When a version is selected, an XML snippet for the dependency will be given under the Maven tab.
 
 Once a dependency has been updated, first ensure the code builds (`make build`), and the tests pass (`make test`). Ideally then the code where the dependency is used will be tested. To determine where a dependency is used, search the codebase for the import statement of that dependency. If it is a transitive dependency, the parent dependency will need to be used in the search.
 
-If there is no exclusion defined in the pom.xml file, it may have been flagged by Github's dependabot tool. The dependabot vulnerabilities can be seen by going to the `/security/dependabot` path of the repository. For example with Zebedee: https://github.com/ONSdigital/zebedee/security/dependabot
+If there is no exclusion defined in the pom.xml file, it may have been flagged by Github's dependabot tool. The dependabot vulnerabilities can be seen by going to the `/security/dependabot` path of the repository. For example with Zebedee: <https://github.com/ONSdigital/zebedee/security/dependabot>
 
 Dependabot may have already created a PR with the updated dependency, though it will be that dependency specifically (not considering parent dependencies). It may also not be the latest version, as there may have been a newer version released since the PR was created. A dependabot PR will be automatically closed if the vulnerability gets fixed by another PR.
 
@@ -150,7 +150,7 @@ The Javascript apps use the build tool NPM, where dependencies are defined in a 
 
 Each dependency in the `package.json` file has an entry under the `dependencies` section:
 
-```
+```json
   "dependencies": {
     "react": "^15.6.2",
     ...
@@ -161,7 +161,7 @@ To run an audit of the dependencies, run the `make audit` command. This is a wra
 
 Exclusions for the dependency audit are defined in the `audit-allowlist.json` file. When fixing a vulnerability, make sure any exclusions for that dependency are removed. Below is an example exclusion file with a single exclusion for the moment dependency.
 
-```
+```json
 {
     "ignore": [
         { "id": "58fdd459-8d4a-4bf6-b106-ef7cff98268c", "package": "moment" }
@@ -171,36 +171,40 @@ Exclusions for the dependency audit are defined in the `audit-allowlist.json` fi
 
 If the vulnerable dependency is not listed in the `package.json` file, it will be a transitive dependency, meaning it is a dependency of a dependency. In these cases it is useful to use the `npm ls` command. This command is run from the directory of the `package.json` file, and will print a tree like representation of dependencies. The output can be searched for the vulnerable dependency, and then the parent of that dependency can be seen. In these cases consider whether updating the parent dependency would be more appropriate. Sometimes updating the parent dependency still does not use a fixed version of the vulnerable dependency. If a transitive dependency needs a specific version, create a new entry under the `resolutions` section of the `package.json`. This will override the existing version used by the parent. It is recommended to only upgrade the minor version if possible, as a major version may include breaking changes.
 
-To see the available versions of a dependency, go to https://www.npmjs.com/ and search the dependency name. For a specific version, select the version tab and then select the version required. Under the install section there will be an example `npm` command to install the dependency at that specific version.
+To see the available versions of a dependency, go to <https://www.npmjs.com/> and search the dependency name. For a specific version, select the version tab and then select the version required. Under the install section there will be an example `npm` command to install the dependency at that specific version.
 
 Once a dependency has been updated, first ensure the code builds (`make build`), and the tests pass (`make test`). Ideally then the code where the dependency is used will be tested. To determine where a dependency is used, search the codebase for the import statement of that dependency. If it is a transitive dependency, the parent dependency will need to be used in the search.
 
-If there is no exclusion defined in the pom.xml file, it may have been flagged by Github's dependabot tool. The dependabot vulnerabilities can be seen by going to the `/security/dependabot` path of the repository. For example with Florence: https://github.com/ONSdigital/florence/security/dependabot
+If there is no exclusion defined in the pom.xml file, it may have been flagged by Github's dependabot tool. The dependabot vulnerabilities can be seen by going to the `/security/dependabot` path of the repository. For example with Florence: <https://github.com/ONSdigital/florence/security/dependabot>
 
 Dependabot may have already created a PR with the updated dependency, though it will be that dependency specifically (not considering parent dependencies). It may also not be the latest version, as there may have been a newer version released since the PR was created. A dependabot PR will be automatically closed if the vulnerability gets fixed by another PR.
 
-
 ## Other technologies
 
-### Node 
+### Node
+
 latest ‘active’ LTS and wait for a patch
 
-### React 
+### React
+
 latest minor version and wait for a patch
 
-### Spring boot 
+### Spring boot
+
 latest minor and wait for a patch
 
 ### Frameworks and libraries
+
 latest minor + patch as clean campsite. Down to senior developers to determine when major version upgrades are worth doing
 
-### Platform technologies 
+### Platform technologies
+
 latest + patch
 
-### Databases 
+### Databases
+
 stay up to date on patches, but all minor/major updates will need discussion and planning due to dependency with clients.
 
-### AWS 
+### AWS
+
 managed should just be latest
-
-

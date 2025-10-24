@@ -3,3 +3,4 @@ config:
   line-length: false
 ignores:
   - "LICENSE.md"
+  - ".github/PULL_REQUEST_TEMPLATE.md"

@@ -1,4 +1,4 @@
-# Logging standards
+# Logging standards for Kubernetes
 
 Monitoring logs effectively in a Kubernetes environment requires tools that centralize and streamline log management.Logging in Kubernetes can be a challenge, especially when dealing with data across a distributed, containerized system. To keep your logs efficient and actionable, it’s essential to understand logging best practices, from handling diverse formats to structuring of logs.
 
@@ -20,7 +20,7 @@ This is important to allow the centralised logging service to properly index the
 
 ### Changes to the spec
 
-Any changes, including the addition of new fields, must be agreed by the team as a whole before being added to this spec.  Any changes to this spec will require changes to all of the [logging libraries](#libraries) as well as the centralised logging service.
+Any changes, including the addition of new fields, must be agreed by the team as a whole before being added to this spec.  Any changes to this spec will require changes to all of the [tools used](#tools-used)  as well as the centralised logging service.
 
 ### Log structure
 
@@ -41,11 +41,9 @@ The following are the only top level fields.
 | `kubernetes.pod_id`         | Yes      | `text`                                  | `6b9e7-1531-453-bfa-d1c2ff86d`                                       | Unique id across the whole cluster                                        |
 | `kubernetes.pod_name`       | Yes      | `text`                                  | `main-sync-teams-cron`                                               | Pod name which is unique across the cluster                               |
 
-
 #### Kubernetes annotations
 
 Kubernetes annotations are key-value pairs attached to Kubernetes objects, providing a flexible way to extend the functionality of your Kubernetes resources without altering their internal specifications.
-
 
 | Field name                                                          | Required | Type           | Example                      | Description                                                   |
 |---------------------------------------------------------------------|----------|----------------|------------------------------|---------------------------------------------------------------|
@@ -62,7 +60,6 @@ Kubernetes annotations are key-value pairs attached to Kubernetes objects, provi
 | `prometheus_io/path`                                                | No      | `text`          |                              | The HTTP status code                                          |
 | `prometheus_io/port`                                                | No      | `text`          | `10254`                      | Prometheus port                                               |
 | `prometheus_io/scrape`                                              | No      | `text`          | `true`                       | Prometheus scrape enabled/disaled                             |
-
 
 #### Kubernetes labels
 

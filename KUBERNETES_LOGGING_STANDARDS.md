@@ -30,16 +30,16 @@ The following are the only top level fields.
 
 | Field name                  | Required | Type                                    | Example                                                              | Description                                                               |
 |-----------------------------|----------|-----------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------|
-| `kubernetes.annotations`    | No       | [`annotations`](#kubernetes-annotations)|                                                                      | [key-value pairs attached to Kubernetes objects](#kubernetes-annotations) |
-| `kubernetes.container_hash` | Yes      | `text`                                  | `11771.dkr.ecr.eu-west-2.amanaws.com/dis/apps/dis-wagil-main@sha256` | Container hash information                                                |
-| `kubernetes.container_image`| Yes      | `text`                                  | `11771.dkr.ecr.eu-west-2.amanaws.com/dis/apps/dis-wagil-main:12345`  | Container image information                                               |
-| `kubernetes.container_name` | Yes      | `text`                                  | `sync-teams-cron`                                                    | Container name information                                                |
-| `kubernetes.docker_id`      | Yes      | `text`                                  | `775cac02b25b9b0fd35bd86c5c0c2e4e226a6`                              | Docker id  information                                                    |
-| `kubernetes.host`           | Yes      | `text`                                  | `ip-10-30-107-46.eu-west-2.compute.internal`                         | Ip address where the app has been deployed                                |
-| `kubernetes.labels`         | Yes      | [`labels`](#kubernetes-labels)          |                                                                      | [`key-value pairs associated with Kubernetes object`](#kubernetes-labels) |
-| `kubernetes.namespace_name` | Yes      | `text`                                  | `wagtail-main`                                                       | Represents a scope for the name of the resources                          |
-| `kubernetes.pod_id`         | Yes      | `text`                                  | `6b9e7-1531-453-bfa-d1c2ff86d`                                       | Unique id across the whole cluster                                        |
-| `kubernetes.pod_name`       | Yes      | `text`                                  | `main-sync-teams-cron`                                               | Pod name which is unique across the cluster                               |
+| `kubernetes.annotations`    | No       | [`annotations`](#kubernetes-annotations)|                                                                      | [key-value pairs attached to Kubernetes objects](#kubernetes-annotations).|
+| `kubernetes.container_hash` | Yes      | `text`                                  | `11771.dkr.ecr.eu-west-2.amanaws.com/dis/apps/dis-wagil-main@sha256` | Container hash information.                                               |
+| `kubernetes.container_image`| Yes      | `text`                                  | `11771.dkr.ecr.eu-west-2.amanaws.com/dis/apps/dis-wagil-main:12345`  | Container image information.                                              |
+| `kubernetes.container_name` | Yes      | `text`                                  | `sync-teams-cron`                                                    | Container name information.                                               |
+| `kubernetes.docker_id`      | Yes      | `text`                                  | `775cac02b25b9b0fd35bd86c5c0c2e4e226a6`                              | Docker id  information.                                                   |
+| `kubernetes.host`           | Yes      | `text`                                  | `ip-10-30-107-46.eu-west-2.compute.internal`                         | Ip address where the app has been deployed.                               |
+| `kubernetes.labels`         | Yes      | [`labels`](#kubernetes-labels)          |                                                                      | [`key-value pairs associated with Kubernetes object`](#kubernetes-labels).|
+| `kubernetes.namespace_name` | Yes      | `text`                                  | `wagtail-main`                                                       | Represents a scope for the name of the resources.                         |
+| `kubernetes.pod_id`         | Yes      | `text`                                  | `6b9e7-1531-453-bfa-d1c2ff86d`                                       | Unique id across the whole cluster.                                       |
+| `kubernetes.pod_name`       | Yes      | `text`                                  | `main-sync-teams-cron`                                               | Pod name which is unique across the cluster.                              |
 
 #### Kubernetes annotations
 
@@ -47,12 +47,12 @@ Kubernetes annotations are key-value pairs attached to Kubernetes objects, provi
 
 | Field name                                                          | Required | Type           | Example                      | Description                                                   |
 |---------------------------------------------------------------------|----------|----------------|------------------------------|---------------------------------------------------------------|
-| `checksum/config`                                                   | No      | `text`          | `236578`                     |                                                               |
-| `checksum/configmap`                                                | No      | `text`          |                              |                                                               |
-| `checksum/health`                                                   | No      | `text`          |                              |                                                               |
-| `checksum/scripts`                                                  | No      | `text`          |                              |                                                               |
-| `checksum/secret`                                                   | No      | `text`          |                              |                                                               |
-| `container_apparmor_security_beta_kubernetes_io/aws-guardduty-agent`| No      | `text`          |                              |                                                               |
+| `checksum/config`                                                   | No      | `text`          | `236578`                     | Hash value representing the current configuration file.       |
+| `checksum/configmap`                                                | No      | `text`          |                              | Hash value of the active Kubernetes ConfigMap.                |
+| `checksum/health`                                                   | No      | `text`          |                              | Hash value indicating the health check configuration.         |
+| `checksum/scripts`                                                  | No      | `text`          |                              | Hash value of deployment or initialization scripts.           |
+| `checksum/secret`                                                   | No      | `text`          |                              | Hash value of the referenced Kubernetes Secret.               |
+| `container_apparmor_security_beta_kubernetes_io/aws-guardduty-agent`| No      | `text`          |                              | AppArmor profile applied to the aws-guardduty-agent container.|
 | `kubectl_kubernetes_io/default-container`                           | No      | `text`          |                              | Default container name                                        |
 | `kubectl_kubernetes_io/restartedAt`                                 | No      | `text`          | `Apr 1, 2025 @ 11:26:03.000` | Date/time string of the request start time                    |
 | `opentelemetry-operator-config/sha256`                              | No      | `text`          |                              | Opentelementry config sha.                                    |
@@ -63,26 +63,26 @@ Kubernetes annotations are key-value pairs attached to Kubernetes objects, provi
 
 #### Kubernetes labels
 
-| Field name                                                          | Required | Type           | Example                      | Description                                                   |
-|---------------------------------------------------------------------|----------|----------------|------------------------------|---------------------------------------------------------------|
-| `app`                                                               | Yes      | `text`         | `236578ebs-csi-controller`   | App name                                                      |
-| `app_kubernetes_io/component`                                       | Yes      | `text`         | `mongodb`                    |                                                               |
-| `app_kubernetes_io/instance`                                        | Yes      | `text`         | `sandbox`                    | The instance where the app is deployed                        |
-| `app_kubernetes_io/managed-by`                                      | Yes      | `text`         | `Helm`                       | How the app is managed                                        |
-| `app_kubernetes_io/name`                                            | Yes      | `text`         | `mongodb`                    | The name of the app                                           |
-| `app_kubernetes_io/part-of`                                         | No       | `text`         | `ingress-nginx`              | The app which it belongs to                                   |
-| `app_kubernetes_io/version`                                         | Yes      | `text`         | `8.0.4`                      | The version of Kubernetes app.                                |
-| `apps_kubernetes_io/pod-index`                                      | No       | `text`         | `wagtail-main-sync-teams`    | The length of the response                                    |
-| `batch_kubernetes_io/controller-uid`                                | No       | `text`         | `b8e7-452c-a73c-cb9c05b75e`  | The scheme or protocol from the URL                           |
-| `batch_kubernetes_io/job-name`                                      | No       | `text`         | `wagtail-main-sync-cron`     |                                                               |
-| `control-plane`                                                     | No       | `text`         |                              |                                                               |
-| `controller-revision-hash`                                          | No       | `text`         |                              |                                                               |
-| `controller-uid`                                                    | No       | `text`         | `1e4e6582-94ac-492d-95e8`    | The UUid of the controller                                    |
-| `eks_amazonaws_com/component`                                       | No       | `text`         |                              |                                                               |
-| `helm_sh/chart`                                                     | No       | `text`         | `wagtail-cms-0.0.0`          | Name of the helm chart                                        |
-| `job-name`                                                          | No       | `text`         | `wagtail-teams-cron-29354924`| Job name which creates the pods for the application           |
-| `k8s-app`                                                           | No       | `text`         | `kube-proxy`                 | Kubernetes app name                                           |
-| `pod-template-generation`                                           | No       | `text`         | `45`                         |                                                               |
-| `pod-template-hash`                                                 | No       | `text`         | `56c4c74bcc`                 | Pod template hash deployed                                    |
-| `statefulset_kubernetes_io/pod-name`                                | No       | `text`         | `wagtail-main`               | Pod name deployed by the application                          |
-| `ons_gov_uk/applogs`                                                | No       | `text`         | `true`                       | check if the application is our                               |
+| Field name                                                          | Required | Type           | Example                      | Description                                                      |
+|---------------------------------------------------------------------|----------|----------------|------------------------------|------------------------------------------------------------------|
+| `app`                                                               | No       | `text`         | `236578ebs-csi-controller`   | App name                                                         |
+| `app_kubernetes_io/component`                                       | Yes      | `text`         | `mongodb`                    | The component within the application (e.g., frontend).           |
+| `app_kubernetes_io/instance`                                        | Yes      | `text`         | `sandbox`                    | The instance where the app is deployed                           |
+| `app_kubernetes_io/managed-by`                                      | Yes      | `text`         | `Helm`                       | How the app is managed                                           |
+| `app_kubernetes_io/name`                                            | Yes      | `text`         | `mongodb`                    | The name of the app                                              |
+| `app_kubernetes_io/part-of`                                         | No       | `text`         | `ingress-nginx`              | The app which it belongs to                                      |
+| `app_kubernetes_io/version`                                         | Yes      | `text`         | `8.0.4`                      | The version of Kubernetes app.                                   |
+| `apps_kubernetes_io/pod-index`                                      | No       | `text`         | `wagtail-main-sync-teams`    | The length of the response                                       |
+| `batch_kubernetes_io/controller-uid`                                | No       | `text`         | `b8e7-452c-a73c-cb9c05b75e`  | The scheme or protocol from the URL                              |
+| `batch_kubernetes_io/job-name`                                      | No       | `text`         | `wagtail-main-sync-cron`     | The name of the batch job that created the resource.             |
+| `control-plane`                                                     | No       | `text`         |                              | Indicates if the resource is part of the K8s control plane.      |
+| `controller-revision-hash`                                          | No       | `text`         |                              | Hash identifying the revision of the controller managing the pod.|
+| `controller-uid`                                                    | No       | `text`         | `1e4e6582-94ac-492d-95e8`    | The UUid of the controller                                       |
+| `eks_amazonaws_com/component`                                       | No       | `text`         |                              | AWS EKS component label for identifying managed resources.       |
+| `helm_sh/chart`                                                     | No       | `text`         | `wagtail-cms-0.0.0`          | Name of the helm chart                                           |
+| `job-name`                                                          | No       | `text`         | `wagtail-teams-cron-29354924`| Job name which creates the pods for the application              |
+| `k8s-app`                                                           | No       | `text`         | `kube-proxy`                 | Kubernetes app name                                              |
+| `pod-template-generation`                                           | No       | `text`         | `45`                         | The generation number of the pod template.                       |
+| `pod-template-hash`                                                 | No       | `text`         | `56c4c74bcc`                 | Pod template hash deployed                                       |
+| `statefulset_kubernetes_io/pod-name`                                | No       | `text`         | `wagtail-main`               | Pod name deployed by the application                             |
+| `ons_gov_uk/applogs`                                                | No       | `text`         | `true`                       | check if the application is our                                  |

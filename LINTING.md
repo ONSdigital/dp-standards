@@ -8,7 +8,7 @@ Linting is a key element of our wider approach to maintaining and improving the 
 
 ## Scope of application
 
-This standard applies to all Dissemination repos that are targetted to live operational use. Live operational use covers any code deployed to a production environment as well as any code used to build, test, debug or support this code.
+This standard applies to all Dissemination repos that are targeted to live operational use. Live operational use covers any code deployed to a production environment as well as any code used to build, test, debug or support this code.
 
 Prototypes, proof-of-concepts (POCs) and alpha code bases are excluded as quality and longevity are not a priority in these cases however these standards can still be used to guide best practice when building them.
 
@@ -35,13 +35,16 @@ The following sections outline the minimum, base requirement for linters and for
 
 These tools are a minimum standard and teams may choose to add additional tools where desired.
 
-### Megalinter
+### MegaLinter
 
-:test_tube: **EXPERIMENTAL:** We are currently trialling adoption of Megalinter as a standard. Discuss with your tech lead before adopting with your repos.
+:test_tube: **EXPERIMENTAL:** We are currently trialling adoption of MegaLinter as a standard, see [dis-design-system-go](https://github.com/onsdigital/dis-design-system-go#linting) for an example implementation. Discuss with your tech lead before adopting with your repos.
 
-Megalinter is a docker based linting toolbox that combines many different language specific linters and provides a common summary output.
+[MegaLinter](https://megalinter.io/) is a docker based linting toolbox that combines many different language specific linters and provides a common summary output.
 
-The normal language specific linters should still be used.
+> [!NOTE]
+>
+> * Autofixing should not be enabled in CI
+> * The normal language specific linters should still be used.
 
 ### Go
 

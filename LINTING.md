@@ -43,7 +43,7 @@ These tools are a minimum standard and teams may choose to add additional tools 
 
 > [!NOTE]
 >
-> * Autofixing should not be enabled in CI
+> * Autofixing should not be enabled in CI unless fixes can be automatically written back to the repository.
 > * The normal language specific linters should still be used.
 
 ### Go

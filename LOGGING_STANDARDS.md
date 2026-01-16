@@ -32,7 +32,9 @@ Always consider the performance impact of logging:
 
 ### Sensitive information
 
-**NEVER** log passwords, credentials, auth headers, IP addresses, or other sensitive information in any form.
+**NEVER** log passwords, credentials, auth headers, or other sensitive information in any form.
+
+In some situations it may be necessary to log a user's IP address, such as during authentication, for the purposes of auditing. This should only be done in specific situations and only when necessary.
 
 ## Logging specification
 

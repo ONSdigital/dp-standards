@@ -64,7 +64,7 @@ The following are the only top level fields. If you have app specific details yo
 | Field name       | Required | Type                           | Example                      | Description                                                                               |
 |------------------|----------|--------------------------------|------------------------------|-------------------------------------------------------------------------------------------|
 | `auth`           | No       | [`auth`](#auth-event-data)     |                              | [Authentication event data](#auth-event-data)                                             |
-| `classification` | No       | `string`                       | `"protective_monitoring"`    | [Log classification for platform routing and special handling](#classification)           |
+| `classification` | No       | `string`                       | `"PROTECTIVE_MONITORING"`    | [Log classification for platform routing and special handling](#classification)           |
 | `created_at`     | Yes      | `datetime`[^1]                 | `"2019-01-21T16:19:12.356Z"` | Date and time of the log event (ISO8601 extended date and time string)                    |
 | `data`           | No       | `object`[^3]                   |                              | [Arbitrary key-value pairs](#arbitrary-data-fields)                                       |
 | `errors`         | No       | [`[]error`](#error-event-data) |                              | [Error event data](#error-event-data)                                                     |
@@ -103,7 +103,7 @@ Allowed values (controlled vocabulary):
 
 | Value                   | Meaning                                                                    |
 |-------------------------|----------------------------------------------------------------------------|
-| `protective_monitoring` | Security relevant events intended for protective monitoring / SIEM routing |
+| `PROTECTIVE_MONITORING` | Security relevant events intended for protective monitoring / SIEM routing |
 
 Rules:
 
@@ -245,7 +245,7 @@ Protective monitoring log (eligible for routing to Sentinel):
   "spec_version": "v1",
   "severity": 2,
   "event": "permission denied",
-  "classification": "protective_monitoring",
+  "classification": "PROTECTIVE_MONITORING",
   "data": {
     "action": "read_dataset",
     "reason": "missing_permission"

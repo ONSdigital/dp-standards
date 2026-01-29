@@ -2,7 +2,7 @@
 
 ## Libraries
 
-We have libraries the following libaries which match the logging standards defined below:
+The following libraries implement the logging standards defined below:
 
 * Go - [github.com/ONSdigital/log.go](https://github.com/ONSdigital/log.go)
 * Java - [com.github.onsdigital.logging](https://github.com/ONSdigital/dp-logging)
@@ -63,25 +63,55 @@ Although "human readable" formatting is useful for local development, all apps d
 
 The following are the only top level fields. If you have app specific details you wish to add, it is likely that they should be added under `data` rather than creating a new field.
 
-| Field name   | Required | Type                           | Example                      | Description                                                             |
-|--------------|----------|--------------------------------|------------------------------|-------------------------------------------------------------------------|
-| `auth`       | No       | [`auth`](#auth-event-data)     |                              | [Authentication event data](#auth-event-data)                           |
-| `created_at` | Yes      | `datetime`[^1]                 | `"2019-01-21T16:19:12.356Z"` | Date and time of the log event (ISO8601 extended date and time string)  |
-| `data`       | No       | `object`[^3]                   |                              | [Arbitrary key-value pairs](#arbitrary-data-fields)                     |
-| `errors`     | No       | [`[]error`](#error-event-data) |                              | [Error event data](#error-event-data)                                   |
-| `event`      | Yes      | `string`                       | `"connecting to mongodb"`    | [The event being logged](#effective-event-types)                        |
-| `http`       | No       | [`http`](#http-event-data)     |                              | [HTTP event data](#http-event-data)                                     |
-| `namespace`  | Yes      | `string`                       | `"dp-frontend-router"`       | Service name or other identifier                                        |
-| `raw`        | No       | `string`                       |                              | [Log message captured from a third party library](#third-party-logs)    |
-| `severity`   | Yes      | `int8`                         | `2`                          | [The event severity level code](#severity-levels)                       |
-| `span_id`    | No       | `string`                       |                              | [Span ID from OpenCensus](https://opencensus.io/tracing/span/spanid/)   |
-| `trace_id`   | No[^2]   | `string`                       |                              | [Trace ID from OpenCensus](https://opencensus.io/tracing/span/traceid/) |
+| Field name       | Required | Type                           | Example                      | Description                                                                               |
+|------------------|----------|--------------------------------|------------------------------|-------------------------------------------------------------------------------------------|
+| `auth`           | No       | [`auth`](#auth-event-data)     |                              | [Authentication event data](#auth-event-data)                                             |
+| `classification` | No       | `string`                       | `"PROTECTIVE_MONITORING"`    | [Log classification for platform routing and special handling](#classification)           |
+| `created_at`     | Yes      | `datetime`[^1]                 | `"2019-01-21T16:19:12.356Z"` | Date and time of the log event (ISO8601 extended date and time string)                    |
+| `data`           | No       | `object`[^3]                   |                              | [Arbitrary key-value pairs](#arbitrary-data-fields)                                       |
+| `errors`         | No       | [`[]error`](#error-event-data) |                              | [Error event data](#error-event-data)                                                     |
+| `event`          | Yes      | `string`                       | `"connecting to mongodb"`    | [The event being logged](#effective-event-types)                                          |
+| `http`           | No       | [`http`](#http-event-data)     |                              | [HTTP event data](#http-event-data)                                                       |
+| `namespace`      | Yes      | `string`                       | `"dp-frontend-router"`       | Service name or other identifier                                                          |
+| `raw`            | No       | `string`                       |                              | [Log message captured from a third party library](#third-party-logs)                      |
+| `severity`       | Yes      | `int8`                         | `2`                          | [The event severity level code](#severity-levels)                                         |
+| `spec_version`   | No       | `string`                       | `"v1"`                       | [Major version of this logging specification used by the emitting library](#spec-version) |
+| `span_id`        | No       | `string`                       |                              | [Span ID from OpenCensus](https://opencensus.io/tracing/span/spanid/)                     |
+| `trace_id`       | No[^2]   | `string`                       |                              | [Trace ID from OpenCensus](https://opencensus.io/tracing/span/traceid/)                   |
 
 [^1]: All dates must be UTC and in ISO8601 extended date time format with at least millisecond precision: `yyyy-MM-dd'T'HH:mm:ss.SSSZZ` (e.g. `2019-01-21T16:19:12.356Z`).
 
 [^2]: Not mandatory, but must be included for all events created during the handling of a request.
 
 [^3]: The event-specific details in `data` are input as an object/map in code, but are stored as a text string by the centralised logging service to allow additional detail to be added to an event without needing to worry about key name collision.  These details can still be searched using a general text search on the `data` field.
+
+#### Spec version
+
+The `spec_version` field is an optional identifier for the major version of this logging specification that the emitting library claims conformance with.
+
+If `spec_version` is not provided, it will be treated as `v1`.
+
+The logging libraries should set `spec_version` automatically on every emitted log line. Services should not override it in normal operation.
+
+#### Classification
+
+The `classification` field is an optional, single value used to mark logs that require special platform handling.
+
+This is primarily intended for platform routing (for example sending protective monitoring logs to Sentinel). It is not a severity indicator and **must not** be used as a substitute for `severity`.
+
+If `classification` is not provided, the event is treated as unclassified and normal routing applies.
+
+Allowed values (controlled vocabulary):
+
+| Value                   | Meaning                                                                    |
+|-------------------------|----------------------------------------------------------------------------|
+| `PROTECTIVE_MONITORING` | Security relevant events intended for protective monitoring / SIEM routing |
+
+Rules:
+
+* values must be lowercase and snake_case
+* services must not invent new values; new values must be added to this specification
+* values must describe the category/intent, not the action to be taken by the platform
 
 #### HTTP event data
 
@@ -185,11 +215,43 @@ For example:
 ```json
 {
   "created_at" : "2019-02-01T13:45:24.157Z",
-  "namespace" : "my-app",
+  "namespace" : "dis-example-service",
+  "spec_version" : "v1",
   "trace_id": "1105cb0c04f86a4b6a1abaf74246b87f",
   "severity" : 3,
   "event": "third party log",
   "raw" : "Started ServerConnector@7f4fedd{HTTP/1.1,[http/1.1]}{0.0.0.0:4567}"
+}
+```
+
+### Routing examples
+
+Normal log (no special routing):
+
+```json
+{
+  "created_at": "2026-01-01T09:15:30.123Z",
+  "namespace": "dis-example-service",
+  "spec_version": "v1",
+  "severity": 3,
+  "event": "starting service"
+}
+```
+
+Protective monitoring log (eligible for routing to Sentinel):
+
+```json
+{
+  "created_at": "2026-01-01T09:15:30.123Z",
+  "namespace": "dis-example-service",
+  "spec_version": "v1",
+  "severity": 2,
+  "event": "permission denied",
+  "classification": "PROTECTIVE_MONITORING",
+  "data": {
+    "action": "read_dataset",
+    "reason": "missing_permission"
+  }
 }
 ```
 

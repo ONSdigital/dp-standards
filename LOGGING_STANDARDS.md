@@ -109,7 +109,7 @@ Allowed values (controlled vocabulary):
 
 Rules:
 
-* values must be lowercase and snake_case
+* values must be uppercase and snake case (e.g. `EXAMPLE_VALUE`)
 * services must not invent new values; new values must be added to this specification
 * values must describe the category/intent, not the action to be taken by the platform
 
